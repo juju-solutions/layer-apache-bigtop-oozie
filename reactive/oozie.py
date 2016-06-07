@@ -12,3 +12,7 @@ def install_oozie(db):
     oozie = Oozie(dist)
     oozie.install_oozie()
     set_state('oozie.installed')
+
+@when('oozie.installed')
+def set_ready():
+    hookenv.status_set('active', 'Ready')
