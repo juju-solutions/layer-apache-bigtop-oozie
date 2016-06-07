@@ -4,6 +4,12 @@ from charms.reactive import is_state, set_state, remove_state, when, when_not
 from charms.layer.hadoop_client import get_dist_config
 
 
+@when('bigtop.available')
+@when_not('db.available')
+def wait_db():
+    hookenv.status_set('maintenance', 'Waiting for MySQL')
+
+
 @when('bigtop.available', 'db.available')
 @when_not('oozie.installed')
 def install_oozie(db):
@@ -14,6 +20,7 @@ def install_oozie(db):
     oozie.open_ports()
     oozie.start()
     set_state('oozie.installed')
+
 
 @when('oozie.installed')
 def set_ready():
