@@ -11,6 +11,8 @@ def install_oozie(db):
     dist = get_dist_config()
     oozie = Oozie(dist)
     oozie.install_oozie()
+    oozie.open_ports()
+    oozie.start()
     set_state('oozie.installed')
 
 @when('oozie.installed')
